@@ -22,7 +22,8 @@ export const GAME_CONFIG = {
 export const TRANSLATIONS = {
   zh: {
     appTitle: "复利花园",
-    footer: "“种一棵树最好的时间是十年前，其次是现在。”",
+    footer: "“种一棵树最好的时间是十年前，其次现在。”",
+    sourceCode: "源代码",
     balance: "总金额",
     principal: "本金",
     interest: "收益",
@@ -49,6 +50,7 @@ export const TRANSLATIONS = {
   en: {
     appTitle: "Compound Garden",
     footer: "“The best time to plant a tree was 20 years ago. The second best time is now.”",
+    sourceCode: "Source Code",
     balance: "Balance",
     principal: "Principal",
     interest: "Interest",

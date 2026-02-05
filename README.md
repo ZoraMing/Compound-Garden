@@ -25,6 +25,10 @@
 
 ## 🚀 快速开始
 
+### 🔗 在线体验
+项目已部署在github pages中
+地址 https://zoraming.github.io/Compound-Garden.github.io/
+
 ### 本地运行
 1. 克隆仓库
 2. 安装依赖: `npm install`
@@ -46,6 +50,10 @@
 - **Sandbox Mode**: Unlocked after the story, allowing you to plan your own path to financial freedom.
 
 ## 🚀 Quick Start
+
+### 🔗 Online Experience
+Project deployed on GitHub Pages
+Address https://ZoraMing.github.io/Compound-Garden/
 
 ### Run Locally
 1. Clone the repository
