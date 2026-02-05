@@ -27,7 +27,7 @@
 
 ### 🔗 在线体验
 项目已部署在github pages中
-地址 https://zoraming.github.io/Compound-Garden.github.io/
+地址 https://zoraming.github.io/Compound-Garden/
 
 ### 本地运行
 1. 克隆仓库
