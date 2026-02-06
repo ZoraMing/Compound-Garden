@@ -285,7 +285,7 @@ export default function App() {
           </div>
 
           {/* Phaser Canvas Container */}
-          <div className="aspect-[4/3] w-full border-4 border-[#586E75] bg-[#FDF6E3] rounded-2xl relative shadow-[8px_8px_0px_rgba(88,110,117,0.2)] overflow-hidden">
+          <div className="aspect-[4/3] w-full border-4 border-[#586E75] bg-[#FDF6E3] rounded-2xl relative shadow-[8px_8px_0px_rgba(88,110,117,0.2)] overflow-hidden" style={{ aspectRatio: '4/3' }}>
 
             {/* Timeline Scrubber */}
             <div className="absolute top-4 left-4 right-4 z-10 flex items-center gap-4">

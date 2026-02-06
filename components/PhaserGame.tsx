@@ -267,8 +267,9 @@ export const PhaserGame: React.FC<PhaserGameProps> = ({ data, currentYearIndex, 
       scale: {
         mode: Phaser.Scale.RESIZE,
         autoCenter: Phaser.Scale.NO_CENTER
-      }
-    };
+      },
+      resolution: window.devicePixelRatio || 1,
+    } as any;
     gameRef.current = new Phaser.Game(config);
 
     return () => {
