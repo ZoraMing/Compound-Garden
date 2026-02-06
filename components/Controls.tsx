@@ -43,14 +43,14 @@ const SliderControl: React.FC<{
         slider-thumb-${colorClass}
       `}
       style={{
-        backgroundImage: `linear-gradient(to right, currentColor 0%, currentColor ${(value - min)/(max - min)*100}%, #E0E0E0 ${(value - min)/(max - min)*100}%, #E0E0E0 100%)`
+        backgroundImage: `linear-gradient(to right, currentColor 0%, currentColor ${(value - min) / (max - min) * 100}%, #E0E0E0 ${(value - min) / (max - min) * 100}%, #E0E0E0 100%)`
       }}
     />
   </div>
 );
 
 const Controls: React.FC<ControlsProps> = ({ params, setParams, lockedParams, lang }) => {
-  
+
   const isVisible = (key: keyof SimulationParams) => !lockedParams.includes(key);
   const t = TRANSLATIONS[lang].controls;
 
@@ -58,8 +58,8 @@ const Controls: React.FC<ControlsProps> = ({ params, setParams, lockedParams, la
     if (params.durationUnit === 'years') {
       setParams({ ...params, durationUnit: 'months', duration: params.duration * 12 });
     } else {
-       // Convert months back to years roughly for UX, or just reset to reasonable default
-       setParams({ ...params, durationUnit: 'years', duration: Math.ceil(params.duration / 12) });
+      // Convert months back to years roughly for UX, or just reset to reasonable default
+      setParams({ ...params, durationUnit: 'years', duration: Math.ceil(params.duration / 12) });
     }
   };
 
@@ -71,7 +71,7 @@ const Controls: React.FC<ControlsProps> = ({ params, setParams, lockedParams, la
           value={params.principal}
           suffix=""
           min={0}
-          max={50000}
+          max={100000}
           step={1000}
           onChange={(v) => setParams({ ...params, principal: v })}
           colorClass="cyan"
@@ -84,20 +84,20 @@ const Controls: React.FC<ControlsProps> = ({ params, setParams, lockedParams, la
           value={params.monthlyContribution}
           suffix=""
           min={0}
-          max={5000}
+          max={20000}
           step={100}
           onChange={(v) => setParams({ ...params, monthlyContribution: v })}
           colorClass="cyan"
         />
       )}
-      
+
       {isVisible('monthlyExpenses') && (
         <SliderControl
           label={t.monthlyExpenses}
           value={params.monthlyExpenses}
           suffix=""
           min={1000}
-          max={10000}
+          max={20000}
           step={100}
           onChange={(v) => setParams({ ...params, monthlyExpenses: v })}
           colorClass="gold"
@@ -110,7 +110,7 @@ const Controls: React.FC<ControlsProps> = ({ params, setParams, lockedParams, la
           value={params.interestRate}
           suffix="%"
           min={0}
-          max={15}
+          max={50}
           step={0.1}
           onChange={(v) => setParams({ ...params, interestRate: v })}
           colorClass="magenta"
@@ -123,12 +123,12 @@ const Controls: React.FC<ControlsProps> = ({ params, setParams, lockedParams, la
           value={params.duration}
           suffix={params.durationUnit === 'years' ? t.yearsSuffix : t.monthsSuffix}
           min={1}
-          max={params.durationUnit === 'years' ? 50 : 600}
+          max={params.durationUnit === 'years' ? 100 : 1200}
           step={1}
           onChange={(v) => setParams({ ...params, duration: v })}
           colorClass="magenta"
           headerAction={
-            <button 
+            <button
               onClick={toggleDurationUnit}
               className="px-2 py-0.5 text-xs bg-[#EEE8D5] text-[#586E75] rounded hover:bg-[#93A1A1] hover:text-white transition-colors uppercase font-bold tracking-wider"
             >
@@ -137,7 +137,7 @@ const Controls: React.FC<ControlsProps> = ({ params, setParams, lockedParams, la
           }
         />
       )}
-      
+
       {/* Custom Styles for Slider Thumbs to match game colors */}
       <style>{`
         input[type=range] {
