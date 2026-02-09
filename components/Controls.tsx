@@ -110,7 +110,7 @@ const Controls: React.FC<ControlsProps> = ({ params, setParams, lockedParams, la
           value={params.interestRate}
           suffix="%"
           min={0}
-          max={50}
+          max={30}
           step={0.1}
           onChange={(v) => setParams({ ...params, interestRate: v })}
           colorClass="magenta"
@@ -123,7 +123,7 @@ const Controls: React.FC<ControlsProps> = ({ params, setParams, lockedParams, la
           value={params.duration}
           suffix={params.durationUnit === 'years' ? t.yearsSuffix : t.monthsSuffix}
           min={1}
-          max={params.durationUnit === 'years' ? 100 : 1200}
+          max={params.durationUnit === 'years' ? 50 : 600}
           step={1}
           onChange={(v) => setParams({ ...params, duration: v })}
           colorClass="magenta"

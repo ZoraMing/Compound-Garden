@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Phaser from 'phaser';
 import { DataPoint } from '../types';
 import { COLORS } from '../constants';
@@ -244,9 +244,46 @@ export const PhaserGame: React.FC<PhaserGameProps> = ({ data, currentYearIndex, 
     }
   }
 
+  const [devicePixelRatio, setDevicePixelRatio] = useState(window.devicePixelRatio || 1);
+
+  // Monitor device pixel ratio changes (zooming, moving screens)
+  useEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout>;
+
+    const checkPixelRatio = () => {
+      if (window.devicePixelRatio !== devicePixelRatio) {
+        setDevicePixelRatio(window.devicePixelRatio);
+      }
+    };
+
+    const handleResize = () => {
+      // Debounce to prevent thrashing during zoom
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(checkPixelRatio, 200);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Polling as a fallback for screen moves that might not trigger resize immediately
+    const intervalId = setInterval(checkPixelRatio, 2000);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearInterval(intervalId);
+      clearTimeout(timeoutId);
+    };
+  }, [devicePixelRatio]);
+
   useEffect(() => {
     // Prevent double init in Strict Mode or if ref already exists
-    if (gameRef.current) return;
+    // Note: When devicePixelRatio changes, we WANT to destroy and recreate,
+    // so we rely on the cleanup function of the previous run.
+    if (gameRef.current) {
+      // If we are here, it might be a double-invoke or a quick re-render.
+      // But since we have a cleanup function, this usually nulls it out.
+      // However, React 18 Strict Mode mounts/unmounts/mounts.
+      // Ideally we let the cleanup handle destruction.
+    }
 
     // Check for container
     if (!containerRef.current) return;
@@ -254,7 +291,6 @@ export const PhaserGame: React.FC<PhaserGameProps> = ({ data, currentYearIndex, 
     const { clientWidth, clientHeight } = containerRef.current;
 
     // Critical fix: Do not initialize Phaser if dimensions are invalid or zero.
-    // This often causes 'Framebuffer status: Incomplete Attachment' errors.
     if (clientWidth <= 0 || clientHeight <= 0) return;
 
     const config: Phaser.Types.Core.GameConfig = {
@@ -268,7 +304,17 @@ export const PhaserGame: React.FC<PhaserGameProps> = ({ data, currentYearIndex, 
         mode: Phaser.Scale.RESIZE,
         autoCenter: Phaser.Scale.NO_CENTER
       },
-      resolution: window.devicePixelRatio || 1,
+      // Real-time DPI adjustment
+      resolution: devicePixelRatio,
+      // Rendering optimizations for crisp lines
+      render: {
+        antialias: true,
+        roundPixels: true,
+        pixelArt: false
+      },
+      audio: {
+        noAudio: true
+      }
     } as any;
     gameRef.current = new Phaser.Game(config);
 
@@ -276,7 +322,7 @@ export const PhaserGame: React.FC<PhaserGameProps> = ({ data, currentYearIndex, 
       gameRef.current?.destroy(true);
       gameRef.current = null;
     };
-  }, []);
+  }, [devicePixelRatio]);
 
   useEffect(() => {
     // ResizeObserver is safer than window resize event for component-based resizing

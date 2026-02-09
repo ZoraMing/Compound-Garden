@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { PhaserGame } from './components/PhaserGame';
 import Controls from './components/Controls';
 import { SimulationParams, GameStage, DataPoint, ChapterConfig, Language } from './types';
